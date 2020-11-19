@@ -2,41 +2,73 @@ import React, {useState} from 'react';
 import './App.css';
 import Counter from "./Counter";
 import Button from "./Button";
+import {MaxInput} from "./MaxInput";
+import {StartInput} from "./StartInput";
 
 
 function App() {
-    let [counter, setCounter] = useState(0)
 
-    let maxValue = 5
-    let minValue = 0
+
+    let [newStartValue, setNewStartValue] = useState<number>(0)
+    let [newMaxValue, setNewMaxValue] = useState<number>(5)
+    let [counter, setCounter] = useState<number>(0);
+    let [error, setError] = useState<string>("")
+
+    const changeNewMaxValue = (newValue: number) => {
+        setNewMaxValue(newValue);
+    }
+
+    const changeNewStartValue = (newValue: number) => {
+        setNewStartValue(newValue);
+    }
+
+    const setValue = () => {
+        counter = newStartValue;
+
+        if (counter === newStartValue) {
+            setCounter(counter);
+        }
+    }
 
     const IncrementFunc = () => {
         let counterInc = counter + 1;
-        if (counter >= maxValue) {
-            return;
-        }
         setCounter(counterInc);
+
+        if (newStartValue) {
+            setCounter(counterInc);
+        }
+
+        if (counter === newMaxValue) {
+            setCounter(counter)
+        }
+
+        if (newStartValue < 0) {
+            setError("Incorrect value!")
+        }
     }
 
     const ResetFunc = () => {
-        if (counter != minValue) {
-            setCounter(0);
+        if (counter >= newMaxValue) {
+            setCounter(0)
         }
     }
 
     return (
         <div className="App">
-
-            <Counter counter={counter}/>
-
-            <div className={"buttons"}>
-                {/* <IncButton IncrementFunc={IncrementFunc} counter={counter}/>
-                <ResetButton ResetFunc={ResetFunc} counter={counter}/>*/}
-                <Button onClick={IncrementFunc} disabled={counter == maxValue}/>
-                <Button onClick={ResetFunc} disabled={counter === minValue}/>
+            <div className="wrapper">
+                <div>
+                    <MaxInput changeNewBorderValue={changeNewMaxValue} BorderValue={newMaxValue} title={"Max Input:"}/>
+                    <StartInput changeNewBorderValue={changeNewStartValue} BorderValue={newStartValue}
+                                title={"Start Input:"}/>
+                </div>
+                <Button disabled = {counter >= newStartValue || counter === newMaxValue} onClick={setValue} title={"Set"}/>
             </div>
+
+            <Counter  counter={counter} IncrementFunc={IncrementFunc} minValue={newStartValue} maxValue={newMaxValue}
+                     ResetFunc={ResetFunc} error = {error} setError = {setError}/>
         </div>
-    );
-}
+    )
+};
+
 
 export default App;
