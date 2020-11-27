@@ -1,17 +1,15 @@
 import React from "react";
 
-
-type ButtonPorps = {
+type ButtonProps = {
     onClick: () => void
+    title: string
     disabled: boolean
-
 }
 
-function Button(props: ButtonPorps) {
+function Button(props: ButtonProps) {
     return (
-        <div className={"buttons"}>
-            <button disabled={props.disabled} onClick={props.onClick}>inc button</button>
-
+        <div className={"button"}>
+            <button disabled={props.disabled} onClick={props.onClick}>{props.title}</button>
         </div>
     );
 }
