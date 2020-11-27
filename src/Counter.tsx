@@ -1,24 +1,15 @@
 import React from "react";
 
-type CounterPropsType = {
+
+type PropsType = {
     counter: number;
-    increment: () => void
-    maxValue: number
-    startValue: number
-    reset: () => void
-    warning: string
-    incorrectValue: boolean
 }
 
-function Counter(props: CounterPropsType) {
-    const disableValue = props.counter === props.maxValue || props.startValue < 0 || props.startValue >= props.maxValue;
-    const counterStyle = (disableValue) ? "incorrectCounterStyle" : "CounterStyle";
-
+function Counter(props: PropsType) {
+    const counterStyle = (props.counter === 5) ? "counterStyle" : "style"
     return (
-        <div>
-            <div className={counterStyle}>{props.warning || props.counter} </div>
-            <div className="CounterButtons">
-            </div>
+        <div className="counter">
+            <div className={counterStyle}>{props.counter}</div>
         </div>
     );
 }
