@@ -1,39 +1,87 @@
 .App {
     display: flex;
-    flex-direction: column;
     border-radius: 20px;
-    width: 300px;
+    width: 500px;
     margin: 20px;
 }
 
-.buttons {
+.buttonWrapper {
     display: flex;
     flex-direction: row;
+}
+
+.inputWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.CounterButtons {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+}
+
+.button {
+    display: flex;
     margin-right: 10px;
 }
 
-.buttons button {
-    background-color: darkslategrey;
+.input {
+    font-size: 25px;
+    font-weight: bold
+}
+
+.input input {
     border-radius: 5px;
     outline: none;
 }
 
-.counter {
+.MaxMistakeInput {
+    border-radius: 5px;
+    outline: none;
+    border: 3px solid red;
+    background: rgba(240, 128, 128);
+}
+
+.StartMistakeInput {
+    border-radius: 5px;
+    outline: none;
+    border: 3px solid red;
+    background: rgba(240, 128, 128);
+}
+
+.button button {
+    flex-direction: row;
+    background-color: darkslategrey;
+    border-radius: 5px;
+    outline: none;
     width: 100px;
+    margin-top: 10px;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
     padding: 30px;
-    text-align: center;
+    margin-right: 20px;
     background-color: slateblue;
     margin-bottom: 20px;
     border-radius: 10px;
 }
 
-.counterStyle {
+.incorrectCounterStyle {
     color: red;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 20px;
+    padding: 20px;
 }
 
-.style {
-    font-size: 30px;
+.CounterStyle {
+    padding: 20px;
+    font-size: 20px;
     font-weight: bold;
 }
