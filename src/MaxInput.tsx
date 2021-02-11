@@ -1,4 +1,5 @@
 import React, {ChangeEvent, useState} from "react";
+import {TextField} from "@material-ui/core";
 
 
 type InputProps = {
@@ -14,14 +15,13 @@ export function MaxInput(props: InputProps) {
         props.changeMaxValue(+e.currentTarget.value);
     }
 
-    let maxInputMistake = props.maxValue < 0 || props.maxValue <= props.startValue ? "MaxMistakeInput" : "Input";
+    let maxInputMistake = props.maxValue < 0 || props.maxValue <= props.startValue ? "MaxMistakeInput" : "";
 
     return (
         <div className="input">
 
-            {props.title} <input className={maxInputMistake} type={"number"}
-                                 onChange={onMaxInputChangeHandler} value={props.maxValue}/>
-
+            {props.title} <TextField className={maxInputMistake} label="Number" variant="filled" type={"number"}
+                                     onChange={onMaxInputChangeHandler} value={props.maxValue}/>
         </div>
     );
 }

@@ -17,8 +17,6 @@ function Counter(props: CounterPropsType) {
     return (
         <div>
             <div className={counterStyle}>{props.warning || props.counter} </div>
-            <div className="CounterButtons">
-            </div>
         </div>
     );
 }

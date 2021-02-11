@@ -1,9 +1,27 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import Counter from "./Counter";
 import {StartInput} from "./StartInput";
 import {MaxInput} from "./MaxInput";
-import Button from "./Button";
+import {Box, Container, makeStyles, Paper} from "@material-ui/core";
+import Button from '@material-ui/core/Button';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        height: "100%",
+        width: "100%",
+        background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+        boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
+        '& > *': {
+            margin: theme.spacing(1),
+        },
+    },
+}));
 
 function App() {
     const [startValue, setStartValue] = useState<number>(0);
@@ -13,6 +31,30 @@ function App() {
     const [disabled, setDisabled] = useState<boolean>(false);
     const [disabledInc, setDisabledInc] = useState<boolean>(false);
     const [disabledReset, setDisabledReset] = useState<boolean>(false);
+
+    const classes = useStyles();
+
+    useEffect(() => {
+
+        let startNumberAsString = localStorage.getItem('startValue')
+        if (startNumberAsString) {
+            let startNumber = JSON.parse(startNumberAsString)
+            setStartValue(startNumber)
+        }
+
+        let maxNumberAsString = localStorage.getItem('maxValue')
+        if (maxNumberAsString) {
+            let maxNumber = JSON.parse(maxNumberAsString)
+            setMaxValue(maxNumber)
+        }
+
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem("startValue", JSON.stringify(startValue))
+        localStorage.setItem("maxValue", JSON.stringify(maxValue))
+    }, [startValue, maxValue])
+
 
     const changeMaxValue = (newValue: number) => {
 
@@ -76,29 +118,37 @@ function App() {
 
 
     return (
-        <div className="App">
-            <div className="wrapper">
-                <MaxInput changeMaxValue={changeMaxValue}
-                          maxValue={maxValue} startValue={startValue}
-                          title={"Max Input:"}/>
+        <Container fixed style={{height: "100vh"}}>
+            <Box display="flex" alignItems="center" justifyContent="center" style={{height: "100vh"}}>
+                <Box style={{height: "50%", width: "40%", margin: "20px"}}>
+                    <Paper elevation={4} className={classes.root}>
+                        <MaxInput changeMaxValue={changeMaxValue}
+                                  maxValue={maxValue} startValue={startValue}
+                                  title={"Max Input:"}/>
 
-                <StartInput changeStartValue={changeStartValue} title={"Min Input:"}
-                            startValue={startValue}
-                            maxValue={maxValue}/>
+                        <StartInput changeStartValue={changeStartValue} title={"Min Input:"}
+                                    startValue={startValue}
+                                    maxValue={maxValue}/>
 
-                <Button disabled={disabled} onClick={setValue} title={"Set"}/>
+                        <Button variant={"contained"} size={"small"} disabled={disabled}
+                                onClick={setValue}> Set</Button>
+                    </Paper>
+                </Box>
 
-            </div>
-            <div className={"wrapper"}>
-                <Counter counter={counter} increment={increment} startValue={startValue} maxValue={maxValue}
-                         reset={reset} warning={warning} incorrectValue={!!warning}/>
+                <Box style={{height: "50%", width: "40%", margin: "20px"}} alignContent="center">
+                    <Paper elevation={4} className={classes.root}>
+                        <Counter counter={counter} increment={increment} startValue={startValue} maxValue={maxValue}
+                                 reset={reset} warning={warning} incorrectValue={!!warning}/>
 
-                <Button disabled={disabledInc}
-                        onClick={increment} title={"inc"}/>
-                <Button disabled={disabledReset} onClick={reset} title={"reset"}/>
+                        <Button variant={"contained"} size={"small"} disabled={disabledInc}
+                                onClick={increment}> inc</Button>
+                        <Button variant={"contained"} size={"small"} disabled={disabledReset}
+                                onClick={reset}> reset</Button>
 
-            </div>
-        </div>
+                    </Paper>
+                </Box>
+            </Box>
+        </Container>
     )
 }
 

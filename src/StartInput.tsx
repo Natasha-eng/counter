@@ -1,4 +1,5 @@
 import React, {ChangeEvent} from "react";
+import {TextField} from "@material-ui/core";
 
 type InputPropsType = {
     changeStartValue: (newValue: number) => void
@@ -15,9 +16,10 @@ export function StartInput(props: InputPropsType) {
     return (
         <div className="input">
 
-            {props.title} <input className={startInputMistake} type={"number"} onChange={onStartInputChangeHandler}
-                                 value={props.startValue}
-                                 autoFocus/>
+            {props.title} <TextField className={startInputMistake} label="Number" type={"number"} variant="filled"
+                                     onChange={onStartInputChangeHandler}
+                                     value={props.startValue}
+                                     autoFocus/>
 
         </div>
 
